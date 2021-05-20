@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<title>Hearts Encoder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body class="w3-black">
+
+<script>
+function ConvertStringToHex(str) {
+              var arr = [];
+              for (var i = 0; i < str.length; i++) {
+                     arr[i] = ("00" + str.charCodeAt(i).toString(16)).slice(-4);
+              }
+              return arr.join("");//"\\u" + arr.join("\\u");
+       }
+	   
+	   function ConvertHexToString(str) {
+              return unescape(str.replace(/\\/g, "%"));
+       }
+
+
+var encode_dict =
+    { '0': "❤️", '1': "🧡", '2': "💛", '3': "💚", '4': "💙", '5': "💜", '6': "🖤", '7': "💕", '8': "💖", '9': "❣️", 'A': "💋", 'B': "🤍", 'C': "😻", 'D': "😘", 'E': "😍", 'F': "🥰"};
+    
+function Encode() {
+    var text_input = document.getElementById("text_input").value;
+	text_input = ConvertStringToHex(text_input);
+	text_input = text_input.toUpperCase();
+    var text_output = document.getElementById("text_output");
+    var result = "";
+    console.log(text_input);
+    for (var i = 0; i < text_input.length; i++) {
+      result += encode_dict[text_input[i]];
+    }
+    text_output.value = result;
+}
+
+function Decode() {
+    var text_input = document.getElementById("text_output").value;
+    var text_output = document.getElementById("text_input");
+    /*var result = "";
+    for (var i = 0; i < text_input.length; i++)
+    {
+      console.log(text_input[i]);
+      result += decode_dict[text_input[i]];
+    }*/
+    var hex = text_input.replaceAll("❤️","0").replaceAll("🧡","1").replaceAll("💛","2").replaceAll("💚","3").replaceAll("💙","4")
+		.replaceAll("💜","5").replaceAll("🖤","6").replaceAll("💕","7").replaceAll("💖","8").replaceAll("❣️","9").replaceAll("💋","A")
+		.replaceAll("🤍","B").replaceAll("😻","C").replaceAll("😘","D").replaceAll("😍","E").replaceAll("🥰","F");
+	
+	hex = '\\u' + hex.match(/.{4}/g).join('\\u');
+	console.log(hex);
+	var result = "";
+	
+	/*for (var n = 0; n < hex.length; n += 2) {
+		result += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+	}
+	
+    text_output.value = result;
+	*/
+	text_output.value = ConvertHexToString(hex);
+}
+</script>
+
+<div class="w3-container w3-display-middle w3-white w3-border-red w3-round-xlarge w3-topbar w3-leftbar w3-rightbar w3-bottombar" style="width:40%;min-width:344px;">
+  <h2 class="w3-center">❤️ Hearts Encoder ❤️</h2>
+  
+  <div class="w3-margin">
+    <label>Original Text:</label>
+    <input class="w3-input w3-border w3-border-red w3-round" type="text" id="text_input">
+  </div>
+  
+  <div class="w3-margin">
+    <label>Hearts Encoded:</label>
+    <input class="w3-input w3-border w3-border-red w3-round" type="text" id="text_output">
+  </div>
+
+  <div class="w3-bar w3-padding w3-margin-bottom">
+    <button class="w3-button w3-left w3-border w3-border-red w3-hover-red" onclick="Encode();">Encode</button>
+    <button class="w3-button w3-right w3-border w3-border-red w3-hover-red" onclick="Decode();">Decode</button>
+  </div>
+</div>
+
+</body>
+</html>
+
+
+
+
